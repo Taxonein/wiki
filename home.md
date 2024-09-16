@@ -2,10 +2,10 @@
 title: Главная
 description: 
 published: true
-date: 2024-09-16T06:28:02.908Z
+date: 2024-09-16T07:53:59.843Z
 tags: 
 editor: markdown
-dateCreated: 2024-08-29T10:23:59.718Z
+dateCreated: 2024-09-16T07:46:06.365Z
 ---
 
 # Добро пожаловать в вики!
