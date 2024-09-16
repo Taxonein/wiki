@@ -2,14 +2,15 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-09-16T06:26:38.225Z
+date: 2024-09-16T08:32:52.071Z
 tags: 
 editor: markdown
-dateCreated: 2024-08-30T08:36:15.241Z
+dateCreated: 2024-09-16T08:13:23.579Z
 ---
 
 # Кастомный образ windows
 ![windowscustom.png](/windowscustom.png)
+
 ```cmd
 diskpart
 lis vol
