@@ -2,10 +2,10 @@
 title: Docker команды и compose файлы
 description: 
 published: true
-date: 2024-09-16T06:27:43.027Z
+date: 2024-09-24T05:19:02.826Z
 tags: 
 editor: markdown
-dateCreated: 2024-08-29T11:29:45.142Z
+dateCreated: 2024-09-22T18:23:13.581Z
 ---
 
 # Docker
@@ -44,6 +44,47 @@ dateCreated: 2024-08-29T11:29:45.142Z
 `docker network create -d macvlan --subnet 192.168.1.0/24 --gateway 192.168.1.1 --ip-range 192.168.1.124/32 -o parent=enx00e04c3643f8 mainnet`
 
 `docker network create --subnet 172.20.0.0/24 --gateway 172.20.0.1 nginxapp`
+## DC Nginx
+```yaml
+services:
+  nginx:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    volumes:
+      - nginx-data:/data
+      - nginx-letsencrypt:/etc/letsencrypt
+
+volumes:
+  nginx-data:
+    external: false
+  nginx-letsencrypt:
+    external: false
+```
+## DC Postrges
+```yaml
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_PASSWORD: "PASSWORD"
+      POSTGRES_USER: "postgres"
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
+    external: false
+```
 ## DC Zabbix
 ```yaml
 services:
@@ -56,10 +97,10 @@ services:
     volumes:
       - ./data:/var/lib/mysql:rw
     environment:
-      - MYSQL_DATABASE=zabbix
-      - MYSQL_USER=zabbix
-      - MYSQL_PASSWORD=PASSWORD
-      - MYSQL_ROOT_PASSWORD=PASSWORD
+      MYSQL_DATABASE: "zabbix"
+      MYSQL_USER "zabbix"
+      MYSQL_PASSWORD "PASSWORD"
+      MYSQL_ROOT_PASSWORD: "PASSWORD"
     restart: unless-stopped
     command: --character-set-server=utf8 --collation-server=utf8_bin --default-authentication-plugin=mysql_native_password
 
@@ -78,14 +119,14 @@ services:
       zabbix-net:
         ipv4_address: 172.30.0.4
     environment:
-      - DB_SERVER_HOST=mysql-server
-      - MYSQL_DATABASE=zabbix
-      - MYSQL_USER=zabbix
-      - MYSQL_PASSWORD=PASSWORD
-      - MYSQL_ROOT_PASSWORD=PASSWORD
-      - ZBX_JAVAGATEWAY=zabbix-java-gateway
+      DB_SERVER_HOST: "mysql-server"
+      MYSQL_DATABASE "zabbix"
+      MYSQL_USER "zabbix"
+      MYSQL_PASSWORD: "PASSWORD"
+      MYSQL_ROOT_PASSWORD: "PASSWORD"
+      ZBX_JAVAGATEWAY=zabbix-java-gateway
     ports:
-      - 10051:10051
+      - "10051:10051"
     restart: unless-stopped
 
   zabbix-web-nginx-mysql:
@@ -95,15 +136,15 @@ services:
       zabbix-net:
         ipv4_address: 172.30.0.5
     environment:
-      - ZBX_SERVER_HOST=zabbix-server-mysql
-      - DB_SERVER_HOST=mysql-server
-      - MYSQL_DATABASE=zabbix
-      - MYSQL_USER=zabbix
-      - MYSQL_PASSWORD=PASSWORD
-      - MYSQL_ROOT_PASSWORD=PASSWORD
-      - ZBX_JAVAGATEWAY=zabbix-java-gateway
+      ZBX_SERVER_HOST: "zabbix-server-mysql"
+      DB_SERVER_HOST: "mysql-server"
+      MYSQL_DATABASE: "zabbix"
+      MYSQL_USER: "zabbix"
+      MYSQL_PASSWORD: "PASSWORD"
+      MYSQL_ROOT_PASSWORD: "PASSWORD"
+      ZBX_JAVAGATEWAY=zabbix-java-gateway
     ports:
-      - 80:8080
+      - "80:8080"
     restart: unless-stopped
 
 networks:
@@ -120,7 +161,7 @@ services:
     image: sonatype/nexus3
     restart: unless-stopped
     ports:
-      - 8000:8000
+      - "8000:8000"
     volumes:
       - ./data/nexus:/nexus-data
     networks:
@@ -177,8 +218,8 @@ services:
       - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./data/nginx/certs:/etc/nginx/certs
     ports:
-      - 443:443
-      - 80:80
+      - "443:443"
+      - "80:80"
     networks:
       gitlab_net:
         ipv4_address: 172.60.0.2
@@ -210,30 +251,17 @@ networks:
 ## DC WikiJS
 ```yaml
 services:
-  db:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_DB: wiki
-      POSTGRES_PASSWORD: PASSWORD
-      POSTGRES_USER: wikijs
-    logging:
-      driver: "none"
-    restart: unless-stopped
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
-
-  wiki:
+  wikijs:
     image: ghcr.io/requarks/wiki:2
-    depends_on:
-      - db
+    container_name: wikijs
     environment:
-      DB_TYPE: postgres
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: wikijs
-      DB_PASS: PASSWORD
-      DB_NAME: wiki
+      DB_TYPE: "postgres"
+      DB_HOST: "10.10.10.20"
+      DB_PORT: "5432"
+      DB_USER: "wikijs"
+      DB_PASS: "PASSWORD"
+      DB_NAME: "wikijs"
     restart: unless-stopped
     ports:
-      - "80:3000"
+      - "8081:3000"
 ```
