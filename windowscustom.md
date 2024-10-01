@@ -2,7 +2,7 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-10-01T12:04:06.768Z
+date: 2024-10-01T12:17:21.620Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:45.875Z
@@ -47,7 +47,7 @@ dism /mount-wim /wimfile:"D:\ChangedISO\WinFolder\sources\install.wim" /index:1 
 dism /image:D:\ChangedISO\mount /Add-Driver /driver:D:\ChangedISO\Drivers\ /recurse
 ```
 
-После завершения операции, необходимо отключить образ:
+После завершения операции, необходимо отключить образ (ОБЯЗАТЕЛЬНО ВЫЙТИ ИЗ ПАПКИ, ИНАЧЕ ОШИБКА):
 ```
 dism /unmount-wim /mountdir:D:\ChangedISO\mount /commit
 ```
