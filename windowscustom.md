@@ -2,7 +2,7 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-10-01T13:04:19.547Z
+date: 2024-10-01T13:21:12.730Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:45.875Z
@@ -57,7 +57,7 @@ dism /unmount-wim /mountdir:D:\ChangedISO\mount /commit
 Скачиваем Windows ADK, и при установке ставим галку у "Deployment tools". После установки открываем Deployment tools. В него вбиваем следующее:
 
 ```
-oscdimg.exe -m -u1 -bC:\Windows\Boot\DVD\EFI\en-US\efisys.bin D:\ChangedISO\WinFolder D:\ChangedISO\WindowsCustom.iso
+oscdimg.exe -m -u1 -bD:\ChangedISO\WinFolder\boot\etfsboot.com D:\ChangedISO\WinFolder D:\ChangedISO\WindowsCustom.iso
 ```
 После чего мы получим iso образ. Далее с ним можем приступать к установке программ и других необходимых компонентов.
 
