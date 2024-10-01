@@ -2,7 +2,7 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-10-01T10:09:13.326Z
+date: 2024-10-01T10:46:43.040Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:45.875Z
@@ -52,7 +52,16 @@ dism /image:D:\ChangedISO\mount /Add-Driver /driver:D:\ChangedISO\Drivers\ /recu
 dism /unmount-wim /mountdir:D:\ChangedISO\mount /commit
 ```
 
-Образ windows с драйверами готов!
+## Запаковка образа в iso
+
+Скачиваем Windows ADK, и при установке ставим галку у "Deployment tools". После установки открываем Deployment tools. В него вбиваем следующее:
+
+```
+oscdimg.exe -m -u1 -bC:\Windows\Boot\DVD\EFI\en-US\efisys.bin D:\ChangedISO\WinFolder D:\ChangedISO\WindowsCustom.iso
+```
+После чего мы получим iso образ. Далее с ним можем приступать к установке программ и других необходимых компонентов.
+
+
 
 
 
