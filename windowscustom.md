@@ -2,7 +2,7 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-10-01T11:10:13.768Z
+date: 2024-10-01T12:04:06.768Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:45.875Z
@@ -96,3 +96,4 @@ Oscdimg /u2 /m /bootdata:2#p0,e,b<ДИСК>:\VINTES\boot\Etfsboot.com#pef,e,b<Д
 C:\Users\Default
 cntrl+shift+f3
 shift+f10
+dism /Cleanup-Wim
