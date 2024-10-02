@@ -2,7 +2,7 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-10-02T10:34:09.515Z
+date: 2024-10-02T10:56:19.656Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:45.875Z
@@ -97,35 +97,13 @@ dism /capture-Image /imageFile:<НА КАКОЙ КОПИРОВАТЬ>:\install.w
 ```
 9. Выключаем виртуалку.
 
+На выходе мы на нашем USB устройстве получаем install.wim файл. Нам его нужно засунуть в распакованный образ винды (предварительно удалив из него install.esd), после чего открываем утилиту "Deployment tools". В нем пишем следующее:
+ 
+ ```
+ Oscdimg /u2 /m /bootdata:2#p0,e,bD:\win10cus\boot\Etfsboot.com#pef,e,bD:\win10cus\efi\microsoft\boot\Efisys.bin D:\win10cus D:\WindowsCustom.iso
+ ```
+
+Собственно, после этого останется только дождаться окончания процесса, и наш образ windows будет готов к установке!
 
 
-
-
-
-
-
-
-
-
-
-![windowscustom.png](/windowscustom.png)
-
-```cmd
-diskpart
-lis vol
-exit
-```
-
-Можно поменять формат с install.esd на install.wim
-```cmd
-dism /capture-Image /imageFile:<НА КАКОЙ КОПИРОВАТЬ>:\install.esd /capturedir:<ДИСК С ВИНДОЙ>:\ /name:windows
-```
-
-```cmd
-Oscdimg /u2 /m /bootdata:2#p0,e,b<ДИСК>:\VINTES\boot\Etfsboot.com#pef,e,b<ДИСК>:\VINTES\efi\microsoft\boot\Efisys.bin <ДИСК>:\VINTES <ДИСК>:\WindowsCustom.iso
-```
-
-C:\Users\Default
-cntrl+shift+f3
-shift+f10
-dism /Cleanup-Wim
+(Если у вас остался образ в DISM, и он не дает продолжить процесс, то пишем: ```dism /Cleanup-Wim```
