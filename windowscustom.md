@@ -2,7 +2,7 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-10-02T10:56:19.656Z
+date: 2024-10-04T12:09:42.965Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:45.875Z
@@ -59,6 +59,9 @@ dism /unmount-wim /mountdir:D:\ChangedISO\mount /commit
 ```
 oscdimg.exe -m -u1 -bD:\ChangedISO\WinFolder\boot\etfsboot.com D:\ChangedISO\WinFolder D:\ChangedISO\WindowsCustom.iso
 ```
+bootdata:2#p0,e,bc:\winpe_x64\etfsboot.com#pEF,e,bc:\winpe_x64\efisys.bin
+
+
 После чего мы получим iso образ. Далее с ним можем приступать к установке программ и других необходимых компонентов.
 
 ## Установка программ в образ
