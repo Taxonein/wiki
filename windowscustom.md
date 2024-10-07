@@ -2,7 +2,7 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-10-04T12:09:42.965Z
+date: 2024-10-07T07:01:57.674Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:45.875Z
@@ -59,7 +59,6 @@ dism /unmount-wim /mountdir:D:\ChangedISO\mount /commit
 ```
 oscdimg.exe -m -u1 -bD:\ChangedISO\WinFolder\boot\etfsboot.com D:\ChangedISO\WinFolder D:\ChangedISO\WindowsCustom.iso
 ```
-bootdata:2#p0,e,bc:\winpe_x64\etfsboot.com#pEF,e,bc:\winpe_x64\efisys.bin
 
 
 После чего мы получим iso образ. Далее с ним можем приступать к установке программ и других необходимых компонентов.
@@ -103,7 +102,7 @@ dism /capture-Image /imageFile:<НА КАКОЙ КОПИРОВАТЬ>:\install.w
 На выходе мы на нашем USB устройстве получаем install.wim файл. Нам его нужно засунуть в распакованный образ винды (предварительно удалив из него install.esd), после чего открываем утилиту "Deployment tools". В нем пишем следующее:
  
  ```
- Oscdimg /u2 /m /bootdata:2#p0,e,bD:\win10cus\boot\Etfsboot.com#pef,e,bD:\win10cus\efi\microsoft\boot\Efisys.bin D:\win10cus D:\WindowsCustom.iso
+ Oscdimg /u2 /m Oscdimg /u2 /m /bootdata:2#p0,e,bD:\ChangedISO\WinFolder\boot\etfsboot.com#pEF,e,bD:\ChangedISO\WinFolder\efi\microsoft\boot\Efisys.bin#pef,e,b D:\ChangedISO\WinFolder D:\WindowsCustom.iso
  ```
 
 Собственно, после этого останется только дождаться окончания процесса, и наш образ windows будет готов к установке!
