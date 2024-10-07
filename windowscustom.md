@@ -2,7 +2,7 @@
 title: Кастомный образ windows
 description: 
 published: true
-date: 2024-10-07T07:01:57.674Z
+date: 2024-10-07T07:39:15.917Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:45.875Z
