@@ -2,7 +2,7 @@
 title: Docker команды и compose файлы
 description: 
 published: true
-date: 2024-10-10T05:24:44.723Z
+date: 2024-10-10T05:26:42.055Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:13.581Z
