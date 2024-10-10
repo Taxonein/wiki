@@ -2,7 +2,7 @@
 title: Docker команды и compose файлы
 description: 
 published: true
-date: 2024-09-24T05:19:02.826Z
+date: 2024-10-10T05:13:23.235Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:13.581Z
@@ -85,7 +85,7 @@ volumes:
   postgres:
     external: false
 ```
-## DC Zabbix
+## DC Zabbix MySQL
 ```yaml
 services:
   mysql-server:
@@ -154,6 +154,79 @@ networks:
       config:
         - subnet: 172.30.0.0/24
 ```
+
+## DC Zabbix Pgsql
+```yaml
+#Last edit: 10.10.24
+services:
+  zabbix-snmptraps:
+    container_name: zabbix-snmptraps
+    image: zabbix/zabbix-snmptraps:alpine-7.0-latest
+    networks:
+      zabbix-net:
+        ipv4_address: 172.30.0.2
+    volumes:
+      - zabbix-snmptraps:/var/lib/zabbix/snmptraps
+      - zabbix-mibs:/usr/share/snmp/mibs
+    ports:
+      - "162:1162"
+    restart: unless-stopped
+
+  zabbix-server-pgsql:
+    container_name: zabbix-server-pgsql
+    image: zabbix/zabbix-server-pgsql:alpine-7.0-latest
+    networks:
+      zabbix-net:
+        ipv4_address: 172.30.0.3
+    environment:
+      - DB_SERVER_HOST=10.10.10.20
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=zabbix
+      - ZBX_ENABLE_SNMP_TRAPS=true
+    volumes:
+      - zabbix-snmptraps:/var/lib/zabbix/snmptraps
+      - zabbix-mibs:/usr/share/snmp/mibs
+    ports:
+      - "10051:10051"
+    restart: unless-stopped
+
+  zabbix-web-nginx-pgsql:
+    container_name: zabbix-web-nginx-pgsql
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-7.0-latest
+    networks:
+      zabbix-net:
+        ipv4_address: 172.30.0.4
+    environment:
+      - ZBX_SERVER_HOST=172.30.0.3
+      - DB_SERVER_HOST=10.10.10.20
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=zabbix
+      - ZBX_SERVER_NAME=zabbix.taxonein.ru
+    volumes:
+      - zabbix-nginx:/etc/ssl/nginx
+    ports:
+      - "80:8080"
+      - "443:8443"
+    restart: unless-stopped
+
+volumes:
+  zabbix-snmptraps:
+    external: false
+  zabbix-mibs:
+    external: false
+  zabbix-nginx:
+    external: false
+
+networks:
+  zabbix-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.30.0.0/24
+```
+
 ## DC Nexus
 ```yaml
 services:
