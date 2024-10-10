@@ -2,7 +2,7 @@
 title: Docker команды и compose файлы
 description: 
 published: true
-date: 2024-10-10T05:24:20.161Z
+date: 2024-10-10T05:24:44.723Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:13.581Z
@@ -73,7 +73,7 @@ services:
     container_name: postgres
     environment:
       POSTGRES_DB: "postgres"
-      POSTGRES_PASSWORD: "060391598"
+      POSTGRES_PASSWORD: "password"
       POSTGRES_USER: "postgres"
     restart: unless-stopped
     ports:
