@@ -2,7 +2,7 @@
 title: Docker команды и compose файлы
 description: 
 published: true
-date: 2024-10-10T05:13:23.235Z
+date: 2024-10-10T05:14:35.740Z
 tags: 
 editor: markdown
 dateCreated: 2024-09-22T18:23:13.581Z
@@ -72,9 +72,9 @@ services:
     image: postgres:15-alpine
     container_name: postgres
     environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_PASSWORD: "PASSWORD"
-      POSTGRES_USER: "postgres"
+      POSTGRES_DB=postgres
+      POSTGRES_PASSWORD=password
+      POSTGRES_USER=postgres
     restart: unless-stopped
     ports:
       - "5432:5432"
